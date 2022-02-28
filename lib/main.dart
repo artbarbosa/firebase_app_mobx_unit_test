@@ -1,10 +1,12 @@
-import 'package:firebase_app_mobx/app/features/login/repository/login_repository_imp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_app_mobx/app/core/services/remote/firebase_remote_config_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'app/app_widget.dart';
+import 'app/core/services/remote/firebase_messaging_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
       options: const FirebaseOptions(
     apiKey: 'AIzaSyDh2bqcnJFk3dU5dBg3BydMRTSz2u3J2TQ',
@@ -12,21 +14,8 @@ void main() async {
     messagingSenderId: '547571169078',
     projectId: 'fir-app-test-bda35',
   ));
-
-  final LoginRepositoryImp repository =
-      LoginRepositoryImp(auth: FirebaseAuth.instance);
-  var user = await repository.loginWithEmail(email: 'arthur.bos@hotmail.com', password: '123456');
-  // ignore: avoid_print
-  print(user.email);
+  await FirebaseMessagingService().inicialize();
+  await FirebaseRemoteConfigService().initialize();
 
   runApp(const AppWidget());
-}
-
-class AppWidget extends StatelessWidget {
-  const AppWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
 }
