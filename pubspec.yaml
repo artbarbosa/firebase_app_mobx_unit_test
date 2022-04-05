@@ -32,8 +32,8 @@ dev_dependencies:
   mobx_codegen:
   build_runner: ^2.1.7
 
-  mockito: ^5.1.0
-
+  mocktail: ^0.3.0
+  
   firebase_auth_mocks: ^0.8.2
   google_sign_in_mocks: ^0.2.1
   
