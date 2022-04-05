@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../core/error/failure.dart';
+import '../errors/login_errors.dart';
 import '../model/user_model.dart';
 import 'login_repository_interface.dart';
 
@@ -28,7 +29,7 @@ class LoginRepositoryImp implements ILoginRepository {
         return userModel;
       }
     } on FirebaseAuthException catch (e) {
-      throw UnknownError(
+      throw LoginWithEmailAndPasswordError(
         errorMessage: e.code,
         stackTrace: e.stackTrace,
         label: e.message,
@@ -65,7 +66,7 @@ class LoginRepositoryImp implements ILoginRepository {
         );
       }
     } on FirebaseAuthException catch (e) {
-      throw UnknownError(
+      throw LoginWithPhoneError(
         errorMessage: e.code,
         stackTrace: e.stackTrace,
         label: e.message,
@@ -86,11 +87,10 @@ class LoginRepositoryImp implements ILoginRepository {
           photoURL: user.photoURL!,
         );
       }
-    } on FirebaseAuthException catch (e) {
-      throw UnknownError(
-        errorMessage: e.code,
-        stackTrace: e.stackTrace,
-        label: e.message,
+    } catch (e, stackTrace) {
+      throw CurrentUserError(
+        errorMessage: e.toString(),
+        stackTrace: stackTrace,
       );
     }
     throw UnknownError();

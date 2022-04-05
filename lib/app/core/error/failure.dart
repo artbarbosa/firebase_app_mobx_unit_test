@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import '../services/remote/firebase_crashlytics_service.dart';
 
 abstract class Failure {
   final String errorMessage;
@@ -9,9 +9,11 @@ abstract class Failure {
     dynamic exception,
     this.errorMessage = '',
   }) {
-    if (stackTrace != null) {
-      debugPrintStack(label: label, stackTrace: stackTrace);
-    }
+    ErrorReport.externalFailureError(
+      exception: exception,
+      stackTrace: stackTrace,
+      reportTag: label,
+    );
   }
 }
 

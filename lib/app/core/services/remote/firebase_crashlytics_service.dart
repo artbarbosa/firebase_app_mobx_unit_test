@@ -37,7 +37,7 @@ class ErrorReport {
   }
 
   static void externalFailureError(
-      dynamic exception, StackTrace? stackTrace, String? reportTag) {
+      {dynamic exception, StackTrace? stackTrace, String? reportTag}) {
     if (stackTrace != null && reportTag != null) {
       _report(exception, stackTrace, 'EXTERNAL_FAILURE: $reportTag');
     }
